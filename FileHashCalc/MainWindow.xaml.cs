@@ -142,6 +142,24 @@ public partial class MainWindow : Window
         SaveResults();
     }
 
+    private void BtnRegisterSendTo_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            ContextMenuRegistrar.RegisterSendTo();
+            MessageBox.Show(
+                "Verknüpfung wurde im 'Senden an'-Menü erstellt.\n\n" +
+                "Rechtsklick auf Datei(en) → Senden an → 'File Hash berechnen'",
+                "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception exc)
+        {
+            MessageBox.Show(
+                $"Registrierung fehlgeschlagen:\n{exc.Message}",
+                "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
     private void BtnRegisterContext_Click(object sender, RoutedEventArgs e)
     {
         try

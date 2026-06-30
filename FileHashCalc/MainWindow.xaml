@@ -87,11 +87,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <ProgressBar x:Name="ProgressBar" Height="18" Visibility="Collapsed"/>
             <TextBlock x:Name="StatusText" Text="Bereit" VerticalAlignment="Center"
                        Foreground="Gray" FontSize="11"/>
-            <Button x:Name="BtnRegisterContext" Grid.Column="1"
+            <Button x:Name="BtnRegisterSendTo" Grid.Column="1"
+                    Content="Zu 'Senden an' hinzufügen" Padding="8,2"
+                    Click="BtnRegisterSendTo_Click" FontSize="11" Margin="0,0,6,0"/>
+            <Button x:Name="BtnRegisterContext" Grid.Column="2"
                     Content="Im Kontextmenü registrieren" Padding="8,2"
                     Click="BtnRegisterContext_Click" FontSize="11"/>
         </Grid>
