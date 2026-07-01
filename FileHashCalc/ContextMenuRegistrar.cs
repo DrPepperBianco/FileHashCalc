@@ -7,8 +7,20 @@ namespace FileHashCalc;
 
 public static class ContextMenuRegistrar
 {
-    private const string KeyName = @"*\shell\FileHashCalc";
+    private const string KeyName = @"Software\Classes\*\shell\FileHashCalc";
     private const string SendToLinkName = "File Hash berechnen.lnk";
+
+    public static bool IsRegistered()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(KeyName);
+        return key != null;
+    }
+
+    public static bool IsSendToRegistered()
+    {
+        var sendToDir = Environment.GetFolderPath(Environment.SpecialFolder.SendTo);
+        return File.Exists(Path.Combine(sendToDir, SendToLinkName));
+    }
 
     public static void Register()
     {

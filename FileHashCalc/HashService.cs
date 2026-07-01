@@ -18,7 +18,7 @@ public static class HashService
         var fileInfo = new FileInfo(filePath);
 
         await using var stream = new FileStream(
-            filePath, FileMode.Open, FileAccess.Read, FileShare.Read,
+            filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete,
             bufferSize: 81920, useAsync: true);
 
         var buffer = new byte[81920];
