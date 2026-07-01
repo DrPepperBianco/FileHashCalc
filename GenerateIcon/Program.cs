@@ -8,13 +8,15 @@ using System.Windows.Media.Imaging;
 //   file-chart-check-outline (file shape)
 //   folder-pound-outline (hash symbol, repositioned)
 
-// File shape (single closed path for fill + stroke)
+// File shape with rounded fold corner
 var fileShape = Geometry.Parse(
     "M14,2 H6 C4.9,2 4,2.9 4,4 V20 C4,21.1 4.9,22 6,22 H18 C19.1,22 20,21.1 20,20 V8 L14,2 Z");
 
-// Fold line (the folded corner)
+// Fold area: white triangle to cover the corner, then fold line with rounded bend
+var foldCover = Geometry.Parse(
+    "M13,2 L13,9.5 C13,9.78 13.22,10 13.5,10 L20,10 L14,2 Z");
 var fileFold = Geometry.Parse(
-    "M13,2 V9 H20");
+    "M13,2 V8.5 C13,9.33 13.67,10 14.5,10 H20");
 
 // Hash symbol centered in file body (shifted from folder-pound by dx=-3, dy=+2)
 var hashSymbol = Geometry.Parse(
@@ -35,7 +37,7 @@ writer.Write((short)sizes.Length);
 
 var pngList = new List<byte[]>();
 foreach (var size in sizes)
-    pngList.Add(RenderPng(size, outlineColor, hashColor, fileShape, fileFold, hashSymbol));
+    pngList.Add(RenderPng(size, outlineColor, hashColor, fileShape, foldCover, fileFold, hashSymbol));
 
 int offset = 6 + sizes.Length * 16;
 for (int i = 0; i < sizes.Length; i++)
@@ -56,7 +58,7 @@ foreach (var data in pngList)
 
 Console.WriteLine($"Icon generated: {outputPath}");
 
-static byte[] RenderPng(int size, Color outlineCol, Color hashCol, Geometry fileShape, Geometry fileFold, Geometry hash)
+static byte[] RenderPng(int size, Color outlineCol, Color hashCol, Geometry fileShape, Geometry foldCover, Geometry fileFold, Geometry hash)
 {
     var visual = new DrawingVisual();
     // Pixel-snapping for crisp small icons
@@ -74,11 +76,16 @@ static byte[] RenderPng(int size, Color outlineCol, Color hashCol, Geometry file
         ctx.PushTransform(new ScaleTransform(scale, scale));
 
         var outlineBrush = new SolidColorBrush(outlineCol);
-        var strokePen = new Pen(outlineBrush, size <= 24 ? 1.5 : 1.0);
+        var strokeWidth = size <= 16 ? 2.0 : size <= 32 ? 1.8 : 1.4;
+        var strokePen = new Pen(outlineBrush, strokeWidth);
+        strokePen.StartLineCap = PenLineCap.Round;
+        strokePen.EndLineCap = PenLineCap.Round;
+        strokePen.LineJoin = PenLineJoin.Round;
 
         // 1. File shape: white fill + anthracite stroke
         ctx.DrawGeometry(Brushes.White, strokePen, fileShape);
-        // 2. Fold line
+        // 2. White cover over fold corner, then rounded fold line
+        ctx.DrawGeometry(Brushes.White, null, foldCover);
         ctx.DrawGeometry(null, strokePen, fileFold);
         // 3. Blue hash symbol on top
         ctx.DrawGeometry(new SolidColorBrush(hashCol), null, hash);
