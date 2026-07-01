@@ -1,0 +1,11 @@
+Third-Party Notices
+====================
+
+This project uses the following third-party components:
+
+Icons: Material Design Icons
+  by Pictogrammers (https://pictogrammers.com/)
+  License: Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+  Source: https://github.com/Templarian/MaterialDesign
+
+  Used icons: weather-sunny, weather-night, theme-light-dark
