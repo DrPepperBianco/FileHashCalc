@@ -1,0 +1,77 @@
+<Window x:Class="FileHashCalc.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Einstellungen" Height="380" Width="440"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="{DynamicResource WindowBackground}">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Darstellung -->
+        <GroupBox Grid.Row="0" Header="Darstellung" Margin="0,0,0,12">
+            <StackPanel Margin="8">
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Theme:" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="ThemeCombo" Grid.Column="1"
+                              SelectionChanged="ThemeCombo_SelectionChanged"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Standard-Algorithmus:" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="AlgorithmCombo" Grid.Column="1"
+                              SelectionChanged="AlgorithmCombo_SelectionChanged"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Verhalten -->
+        <GroupBox Grid.Row="1" Header="Verhalten" Margin="0,0,0,12">
+            <StackPanel Margin="8">
+                <CheckBox x:Name="ChkBringToFront"
+                          Content="Fenster bei neuen Dateien in den Vordergrund holen"
+                          Checked="ChkBringToFront_Changed" Unchecked="ChkBringToFront_Changed"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Shell-Integration -->
+        <GroupBox Grid.Row="2" Header="Shell-Integration" Margin="0,0,0,12">
+            <StackPanel Margin="8">
+                <Grid Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Kontextmenü (Rechtsklick auf Dateien):" VerticalAlignment="Center"/>
+                    <Button x:Name="BtnContextMenu" Grid.Column="1" MinWidth="120" Padding="8,4"
+                            Click="BtnContextMenu_Click"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="'Senden an'-Menü:" VerticalAlignment="Center"/>
+                    <Button x:Name="BtnSendTo" Grid.Column="1" MinWidth="120" Padding="8,4"
+                            Click="BtnSendTo_Click"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Schließen -->
+        <Button Grid.Row="4" Content="Schließen" HorizontalAlignment="Right"
+                Padding="16,6" Click="BtnClose_Click"/>
+    </Grid>
+</Window>
