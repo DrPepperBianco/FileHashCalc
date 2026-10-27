@@ -189,7 +189,7 @@ public partial class MainWindow : Window
     {
         if (ResultsGrid.SelectedItem is HashResult result)
         {
-            Clipboard.SetText($"{result.FileName}\t{result.Hash}\t{result.Algorithm}\t{result.Timestamp:dd.MM.yyyy HH:mm:ss}");
+            Clipboard.SetText($"{result.FilePath}\t{result.Hash}\t{result.Algorithm}\t{result.Timestamp:dd.MM.yyyy HH:mm:ss}");
             StatusText.Text = "Zeile kopiert";
         }
     }

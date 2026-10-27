@@ -1,3 +1,6 @@
+using System.IO;
+using System.Text.Json.Serialization;
+
 namespace FileHashCalc;
 
 public class HashResult
@@ -8,4 +11,7 @@ public class HashResult
     public string Algorithm { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; }
     public long FileSize { get; set; }
+
+    [JsonIgnore]
+    public string Directory => Path.GetDirectoryName(FilePath) ?? string.Empty;
 }
